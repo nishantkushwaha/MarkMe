@@ -14,20 +14,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AccountActivity.TeacherLoginActivity" />
-        <activity android:name=".AccountActivity.TeacherSignupActivity" />
-        <activity android:name=".AccountActivity.TeacherResetPasswordActivity" />
-        <activity android:name=".Student.StudentLoginActivity" />
-        <activity android:name=".Teacher.TeacherLoginActivity" />
-        <activity android:name=".Student.StudentMainActivity" />
-        <activity android:name=".Teacher.TeacherMainActivity"></activity>
+        <activity android:name=".Student.StudentLoginActivity"
+            android:noHistory="true"/>
+        <activity android:name=".Teacher.TeacherLoginActivity"
+            android:noHistory="true"/>
+        <activity android:name=".Student.StudentMainActivity"
+            android:noHistory="true"/>
+        <activity android:name=".Teacher.TeacherMainActivity"
+            android:noHistory="true"></activity>
     </application>
 
 </manifest>

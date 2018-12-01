@@ -28,6 +28,8 @@ public class StudentMainActivity extends AppCompatActivity {
     public void signOut(View view){
         mAuth= FirebaseAuth.getInstance();
         mAuth.signOut();
-        startActivity(new Intent(StudentMainActivity.this,StudentLoginActivity.class));
+
+        startActivity(new Intent(StudentMainActivity.this,MainActivity.class));
+        this.finish();
     }
 }

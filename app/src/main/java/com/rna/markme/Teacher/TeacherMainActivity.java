@@ -54,7 +54,9 @@ public class TeacherMainActivity extends AppCompatActivity {
     public void signOut(View view){
         mAuth= FirebaseAuth.getInstance();
         mAuth.signOut();
-        startActivity(new Intent(TeacherMainActivity.this,TeacherLoginActivity.class));
+
+        startActivity(new Intent(TeacherMainActivity.this,MainActivity.class));
+        this.finish();
     }
 
 }

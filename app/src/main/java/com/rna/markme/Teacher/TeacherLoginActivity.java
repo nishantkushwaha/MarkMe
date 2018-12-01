@@ -40,9 +40,11 @@ public class TeacherLoginActivity extends AppCompatActivity {
                 if(firebaseAuth.getCurrentUser()!=null){
                     Intent intent = new Intent(TeacherLoginActivity.this,TeacherMainActivity.class);
                     startActivity(intent);
+
                 }
             }
         };
+
     }
 
     @Override
