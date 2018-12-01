@@ -54,21 +54,28 @@ public class StudentLoginActivity extends AppCompatActivity {
         String email= emailText.getText().toString();
         String pass =passText.getText().toString();
 
+
         if(TextUtils.isEmpty(email) || TextUtils.isEmpty(pass)){
             Toast.makeText(this,"Enter both Values",Toast.LENGTH_LONG).show();
         }
 
         else{
-            mAuth.signInWithEmailAndPassword(email,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
+            if(email.length()==25){
+                mAuth.signInWithEmailAndPassword(email,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
 
-                    if(!task.isSuccessful()){
-                        Toast.makeText(StudentLoginActivity.this,"Incorrect Username or password",Toast.LENGTH_LONG).show();
+                        if(!task.isSuccessful()){
+                            Toast.makeText(StudentLoginActivity.this,"Incorrect Username or password",Toast.LENGTH_LONG).show();
 
+                        }
                     }
-                }
-            });
+                });
+            }
+            else {
+                Toast.makeText(this,"Incorrect Email",Toast.LENGTH_LONG).show();
+            }
+
         }
     }
 }

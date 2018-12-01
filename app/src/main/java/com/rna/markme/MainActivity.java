@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -26,6 +28,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        RelativeLayout rt =(RelativeLayout)findViewById(R.id.Rtlayout);
+        TextView txp=(TextView)findViewById(R.id.txp);
+        rt.setVisibility(View.GONE);
+        txp.setText("Please wait a moment");
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             String uid = user.getUid();
@@ -48,7 +54,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         } else {
-            // No user is signed in
+            txp.setVisibility(View.GONE);
+            rt.setVisibility(View.VISIBLE);
         }
 
     }

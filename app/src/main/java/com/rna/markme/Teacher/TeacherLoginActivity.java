@@ -60,16 +60,22 @@ public class TeacherLoginActivity extends AppCompatActivity {
         }
 
         else{
-            mAuth.signInWithEmailAndPassword(email,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
+            if(email.length()!=25){
+                mAuth.signInWithEmailAndPassword(email,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
 
-                    if(!task.isSuccessful()){
-                        Toast.makeText(TeacherLoginActivity.this,"Incorrect Username or password",Toast.LENGTH_LONG).show();
+                        if(!task.isSuccessful()){
+                            Toast.makeText(TeacherLoginActivity.this,"Incorrect Username or password",Toast.LENGTH_LONG).show();
 
+                        }
                     }
-                }
-            });
+                });
+            }
+            else {
+                Toast.makeText(this,"Incorrect Email",Toast.LENGTH_LONG).show();
+            }
+
         }
     }
 }
