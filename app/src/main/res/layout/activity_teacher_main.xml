@@ -11,6 +11,13 @@
     tools:context=".Teacher.TeacherMainActivity">
 
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="163dp"
+        android:text="Teacher" />
+    <TextView
         android:text="Sucess"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
