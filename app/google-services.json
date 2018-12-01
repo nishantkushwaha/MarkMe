@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "200231137153",
+    "firebase_url": "https://markme-e6b69.firebaseio.com",
+    "project_id": "markme-e6b69",
+    "storage_bucket": "markme-e6b69.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:200231137153:android:c27a2b1dc356a4e5",
+        "android_client_info": {
+          "package_name": "com.rna.markme"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "200231137153-qcatl2qet6l52rluqplbkvucs92ojq8m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLSk_8-cJPnT5ewSO2c6dd7_8Y4qSn0y8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
