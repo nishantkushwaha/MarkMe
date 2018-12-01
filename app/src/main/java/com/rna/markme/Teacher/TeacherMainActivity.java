@@ -51,12 +51,17 @@ public class TeacherMainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        finishAffinity();
+    }
+
     public void signOut(View view){
         mAuth= FirebaseAuth.getInstance();
         mAuth.signOut();
-
         startActivity(new Intent(TeacherMainActivity.this,MainActivity.class));
-        this.finish();
+        finishAffinity();
+
     }
 
 }

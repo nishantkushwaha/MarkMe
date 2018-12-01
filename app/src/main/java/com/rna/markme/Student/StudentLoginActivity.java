@@ -50,6 +50,11 @@ public class StudentLoginActivity extends AppCompatActivity {
         mAuth.addAuthStateListener(authstateListener);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
     public void loginButtonClicked(View view) {
         String email= emailText.getText().toString();
         String pass =passText.getText().toString();

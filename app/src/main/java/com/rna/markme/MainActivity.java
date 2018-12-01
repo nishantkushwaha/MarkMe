@@ -62,20 +62,18 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        this.finish();
+        finishAffinity();
     }
 
     public void StudentAct(View view){
 
         startActivity(new Intent(MainActivity.this,StudentLoginActivity.class));
-        this.finish();
 
 
     }
     public void TeacherAct(View view){
 
         startActivity(new Intent(MainActivity.this,TeacherLoginActivity.class));
-        this.finish();
 
 
     }

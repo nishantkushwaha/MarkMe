@@ -25,11 +25,16 @@ public class StudentMainActivity extends AppCompatActivity {
         txt.setText(email.substring(0, email.length() - 10));
     }
 
+    @Override
+    public void onBackPressed() {
+        finishAffinity();
+    }
+
     public void signOut(View view){
         mAuth= FirebaseAuth.getInstance();
         mAuth.signOut();
-
         startActivity(new Intent(StudentMainActivity.this,MainActivity.class));
-        this.finish();
+        finishAffinity();
+
     }
 }
