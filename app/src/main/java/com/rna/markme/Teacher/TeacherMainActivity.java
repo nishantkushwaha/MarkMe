@@ -16,6 +16,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.rna.markme.MainActivity;
 import com.rna.markme.R;
+import com.rna.markme.Student.StudentInterfaceActivity;
 import com.rna.markme.Student.StudentLoginActivity;
 import com.rna.markme.Student.StudentMainActivity;
 
@@ -34,19 +35,6 @@ public class TeacherMainActivity extends AppCompatActivity {
         String uid = user.getUid();
         txt=(TextView)findViewById(R.id.textView);
         txt.setText(email.substring(0, email.length() - 10));
-//        ref= FirebaseDatabase.getInstance().getReference().child(uid);
-//        ref.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                String Type=dataSnapshot.getValue().toString();
-//                txt.setText(Type);
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
 
 
     }
@@ -62,6 +50,9 @@ public class TeacherMainActivity extends AppCompatActivity {
         startActivity(new Intent(TeacherMainActivity.this,MainActivity.class));
         finishAffinity();
 
+    }
+    public void teacherInterface(View view){
+        startActivity(new Intent(TeacherMainActivity.this,TeacherInterfaceActivity.class));
     }
 
 }

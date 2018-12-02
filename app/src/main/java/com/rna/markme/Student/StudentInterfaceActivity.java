@@ -17,7 +17,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import net.cryptobrewery.macaddress.MacAddress;
 import com.rna.markme.R;
 
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ public class StudentInterfaceActivity extends AppCompatActivity implements View.
     TextView textStatus;
     Button buttonScan;
     List<ScanResult> results;
-
+    WifiInfo info;
     String ITEM_KEY = "key";
     ArrayList<String> arraylist = new ArrayList<>();
     ArrayAdapter adapter;
@@ -43,7 +43,7 @@ public class StudentInterfaceActivity extends AppCompatActivity implements View.
         buttonScan.setOnClickListener(this);
         lv = (ListView)findViewById(R.id.wifilist);
         textStatus=(TextView)findViewById(R.id.textStatus);
-        lv.setVisibility(View.GONE);
+        lv.setVisibility(View.VISIBLE);
 
 
         wifi = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
@@ -52,10 +52,10 @@ public class StudentInterfaceActivity extends AppCompatActivity implements View.
             Toast.makeText(getApplicationContext(), "wifi is disabled..making it enabled", Toast.LENGTH_LONG).show();
             wifi.setWifiEnabled(true);
         }
+        info = wifi.getConnectionInfo ();
         adapter =  new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,arraylist);
         lv.setAdapter(adapter);
         scanWifiNetworks();
-
 
 
     }
@@ -100,7 +100,7 @@ public class StudentInterfaceActivity extends AppCompatActivity implements View.
                 arraylist.add(scanResult.BSSID);
                 adapter.notifyDataSetChanged();
             }
-            WifiInfo info = wifi.getConnectionInfo ();
+
             textStatus.setText(check(info.getBSSID()));
 
 

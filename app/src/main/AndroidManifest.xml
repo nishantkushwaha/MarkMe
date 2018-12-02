@@ -33,7 +33,8 @@
         <activity
             android:name=".Teacher.TeacherMainActivity"
             android:noHistory="true" />
-        <activity android:name=".Student.StudentInterfaceActivity"></activity>
+        <activity android:name=".Student.StudentInterfaceActivity" />
+        <activity android:name=".Teacher.TeacherInterfaceActivity"></activity>
     </application>
 
 </manifest>
