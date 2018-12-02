@@ -37,4 +37,7 @@ public class StudentMainActivity extends AppCompatActivity {
         finishAffinity();
 
     }
+    public void studentInterface(View view){
+        startActivity(new Intent(StudentMainActivity.this,StudentInterfaceActivity.class));
+    }
 }

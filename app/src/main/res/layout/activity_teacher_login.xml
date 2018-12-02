@@ -9,7 +9,9 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="16dp"
-    tools:context=".Teacher.TeacherLoginActivity">
+    tools:context=".Teacher.TeacherLoginActivity"
+    android:background="#ffffff"
+    android:gravity="center">
 
     <EditText
         android:layout_width="match_parent"
@@ -27,9 +29,12 @@
 
     <Button
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:onClick="loginButtonClicked"
         android:text="Login"
+        android:layout_marginTop="5dp"
+        android:background="#000000"
+        android:textColor="#ffffff"
         />
 
 </LinearLayout>
