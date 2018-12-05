@@ -37,4 +37,9 @@ public class TeacherInterfaceActivity extends AppCompatActivity {
         }
         bssidtxt.setText(bssid);
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }

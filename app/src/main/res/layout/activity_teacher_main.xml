@@ -16,10 +16,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="163dp"
+        android:layout_marginTop="101dp"
         android:text="Teacher Account"
-        android:textSize="20sp"
-        android:textColor="#000000"/>
+        android:textColor="#000000"
+        android:textSize="20sp" />
     <TextView
         android:text="Sucess"
         android:layout_width="wrap_content"
@@ -50,4 +50,5 @@
         android:padding="8dp"
         android:background="#000000"
         android:textColor="#ffffff"/>
+
 </RelativeLayout>
