@@ -1,7 +1,9 @@
 package com.rna.markme.Teacher;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.rna.markme.R;
@@ -37,9 +39,13 @@ public class TeacherInterfaceActivity extends AppCompatActivity {
         }
         bssidtxt.setText(bssid);
     }
+    public void getAtt(View view){
+        startActivity(new Intent(TeacherInterfaceActivity.this,GetAttendanceActivity.class));
+    }
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        startActivity(new Intent(this,TeacherMainActivity.class));
+        finishAffinity();
     }
 }

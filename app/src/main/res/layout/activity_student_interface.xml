@@ -30,4 +30,14 @@
         android:background="#000000"
         android:text="Search Me"
         android:textColor="#ffffff"/>
+    <Button
+        android:id="@+id/MARK"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:layout_margin="15dp"
+        android:background="#000000"
+        android:text="MARK"
+        android:onClick="mark"
+        android:textColor="#ffffff"/>
 </LinearLayout>
