@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
         android:allowBackup="false"
@@ -25,17 +26,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Student.StudentLoginActivity" />
-        <activity android:name=".Teacher.TeacherLoginActivity" />
+        <activity android:name=".student.StudentLoginActivity" />
+        <activity android:name=".teacher.TeacherLoginActivity" />
         <activity
-            android:name=".Student.StudentMainActivity"
+            android:name=".student.StudentMainActivity"
             android:noHistory="true" />
         <activity
-            android:name=".Teacher.TeacherMainActivity"
+            android:name=".teacher.TeacherMainActivity"
             android:noHistory="true" />
-        <activity android:name=".Student.StudentInterfaceActivity" />
-        <activity android:name=".Teacher.TeacherInterfaceActivity" />
-        <activity android:name=".Teacher.GetAttendanceActivity"></activity>
+        <activity android:name=".student.StudentInterfaceActivity" />
+        <activity android:name=".teacher.TeacherInterfaceActivity" />
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.rna.markme.Student;
+package com.rna.markme.teacher;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -15,7 +15,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.rna.markme.R;
 
-public class StudentLoginActivity extends AppCompatActivity {
+public class TeacherLoginActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener authstateListener;
@@ -25,8 +25,7 @@ public class StudentLoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_student_login);
-
+        setContentView(R.layout.activity_teacher_login);
         emailText= (EditText) findViewById(R.id.userEmail);
         passText= (EditText) findViewById(R.id.userPass);
 
@@ -37,11 +36,13 @@ public class StudentLoginActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
 
                 if(firebaseAuth.getCurrentUser()!=null){
-                    Intent intent = new Intent(StudentLoginActivity.this,StudentMainActivity.class);
+                    Intent intent = new Intent(TeacherLoginActivity.this,TeacherMainActivity.class);
                     startActivity(intent);
+
                 }
             }
         };
+
     }
 
     @Override
@@ -59,19 +60,18 @@ public class StudentLoginActivity extends AppCompatActivity {
         String email= emailText.getText().toString();
         String pass =passText.getText().toString();
 
-
         if(TextUtils.isEmpty(email) || TextUtils.isEmpty(pass)){
             Toast.makeText(this,"Enter both Values",Toast.LENGTH_LONG).show();
         }
 
         else{
-            if(email.length()==25){
+            if(email.length()!=25){
                 mAuth.signInWithEmailAndPassword(email,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
                         if(!task.isSuccessful()){
-                            Toast.makeText(StudentLoginActivity.this,"Incorrect Username or password",Toast.LENGTH_LONG).show();
+                            Toast.makeText(TeacherLoginActivity.this,"Incorrect Username or password",Toast.LENGTH_LONG).show();
 
                         }
                     }

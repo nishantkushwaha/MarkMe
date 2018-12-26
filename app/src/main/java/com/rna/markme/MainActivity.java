@@ -15,36 +15,34 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.rna.markme.Student.StudentLoginActivity;
-import com.rna.markme.Student.StudentMainActivity;
-import com.rna.markme.Teacher.TeacherLoginActivity;
-import com.rna.markme.Teacher.TeacherMainActivity;
+import com.rna.markme.student.StudentLoginActivity;
+import com.rna.markme.teacher.TeacherLoginActivity;
 
 public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth.AuthStateListener authstateListener;
     DatabaseReference ref;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        RelativeLayout rt =(RelativeLayout)findViewById(R.id.Rtlayout);
-        TextView txp=(TextView)findViewById(R.id.txp);
+        RelativeLayout rt = (RelativeLayout) findViewById(R.id.Rtlayout);
+        TextView txp = (TextView) findViewById(R.id.txp);
         rt.setVisibility(View.GONE);
         txp.setText("Please wait a moment");
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             String uid = user.getUid();
-            ref= FirebaseDatabase.getInstance().getReference().child(uid);
+            ref = FirebaseDatabase.getInstance().getReference().child(uid);
             ref.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    String Type=dataSnapshot.getValue().toString();
-                    if(Type.equals("student"))
-                    {
-                        startActivity(new Intent(MainActivity.this,StudentLoginActivity.class));}
-                    else {
-                        startActivity(new Intent(MainActivity.this,TeacherLoginActivity.class));
+                    String Type = dataSnapshot.getValue().toString();
+                    if (Type.equals("student")) {
+                        startActivity(new Intent(MainActivity.this, StudentLoginActivity.class));
+                    } else {
+                        startActivity(new Intent(MainActivity.this, TeacherLoginActivity.class));
                     }
                 }
 
@@ -65,16 +63,11 @@ public class MainActivity extends AppCompatActivity {
         finishAffinity();
     }
 
-    public void StudentAct(View view){
-
-        startActivity(new Intent(MainActivity.this,StudentLoginActivity.class));
-
-
+    public void StudentAct(View view) {
+        startActivity(new Intent(MainActivity.this, StudentLoginActivity.class));
     }
-    public void TeacherAct(View view){
 
-        startActivity(new Intent(MainActivity.this,TeacherLoginActivity.class));
-
-
+    public void TeacherAct(View view) {
+        startActivity(new Intent(MainActivity.this, TeacherLoginActivity.class));
     }
 }

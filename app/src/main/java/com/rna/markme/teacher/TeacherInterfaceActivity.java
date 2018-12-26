@@ -1,6 +1,7 @@
-package com.rna.markme.Teacher;
+package com.rna.markme.teacher;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
@@ -14,39 +15,53 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.knexis.hotspot.Hotspot;
 import com.rna.markme.R;
+import com.rna.markme.student.StudentMainActivity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
-public class GetAttendanceActivity extends AppCompatActivity {
+public class TeacherInterfaceActivity extends AppCompatActivity {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     ArrayList<String> arraylist = new ArrayList<>();
     ArrayAdapter adapter;
     ListView lv;
     WifiManager wifiManager;
+    String sub,email,id;
     boolean connected = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_get_attendance);
+        setContentView(R.layout.activity_teacher_interface);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        email = user.getEmail();
+        id=email.substring(0, email.length() - 10);
+        Intent intent=getIntent();
+        sub=intent.getStringExtra("subTag");
         adapter =  new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,arraylist);
         lv = (ListView)findViewById(R.id.data);
         lv.setAdapter(adapter);
         getData();
-
     }
-
     public void refresh(View view){
         arraylist.clear();
         adapter.clear();
         getData();
 
     }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this, TeacherMainActivity.class));
+        finishAffinity();
+    }
+
     public void getData(){
         ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
         if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
@@ -57,13 +72,16 @@ public class GetAttendanceActivity extends AppCompatActivity {
         else
             connected = false;
         if(connected==true){
-            db.collection("Teacher1").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            db.collection(id).document(sub).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 
                     if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            arraylist.add(document.getString("Roll"));
+                        DocumentSnapshot document = task.getResult();
+                        Map<String, Object> user = new HashMap<>();
+                        user=document.getData();
+                        for (String s : user.keySet()) {
+                            arraylist.add(s);
                             adapter.notifyDataSetChanged();
                         }
                     } else {

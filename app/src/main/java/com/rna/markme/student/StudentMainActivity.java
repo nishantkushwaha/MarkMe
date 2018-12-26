@@ -1,4 +1,4 @@
-package com.rna.markme.Student;
+package com.rna.markme.student;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -38,6 +38,8 @@ public class StudentMainActivity extends AppCompatActivity {
 
     }
     public void studentInterface(View view){
+//        Intent myIntent = new Intent( Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+//        startActivity(myIntent);
         startActivity(new Intent(StudentMainActivity.this,StudentInterfaceActivity.class));
     }
 }

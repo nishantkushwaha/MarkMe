@@ -9,7 +9,7 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="16dp"
-    tools:context=".Teacher.TeacherLoginActivity"
+    tools:context=".teacher.TeacherLoginActivity"
     android:background="#ffffff"
     android:gravity="center">
 

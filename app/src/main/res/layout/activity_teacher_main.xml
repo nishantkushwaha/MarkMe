@@ -8,7 +8,7 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="16dp"
-    tools:context=".Teacher.TeacherMainActivity"
+    tools:context=".teacher.TeacherMainActivity"
     android:background="#ffffff">
 
     <TextView
@@ -16,39 +16,75 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="101dp"
+        android:layout_marginTop="497dp"
         android:text="Teacher Account"
         android:textColor="#000000"
         android:textSize="20sp" />
+
     <TextView
-        android:text="Sucess"
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:id="@+id/textView"
-        android:textSize="20sp"
-        android:textColor="#000000"/>
+        android:layout_marginBottom="56dp"
+        android:text="Sucess"
+        android:textColor="#000000"
+        android:textSize="20sp" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="197dp"
+        android:layout_marginBottom="122dp"
+        android:background="#000000"
         android:onClick="signOut"
         android:text="Logout"
-        android:background="#000000"
-        android:textColor="#ffffff"/>
+        android:textColor="#ffffff" />
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="198dp"
-        android:onClick="teacherInterface"
-        android:text="Generate Barcode"
-        android:padding="8dp"
+        android:layout_marginTop="217dp"
         android:background="#000000"
-        android:textColor="#ffffff"/>
+        android:onClick="markSlot"
+        android:padding="8dp"
+        android:text="Make Slot"
+        android:textColor="#ffffff" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="197dp"
+        android:background="#000000"
+        android:onClick="getAttendance"
+        android:padding="8dp"
+        android:text="GET ATTENDANCE"
+        android:textColor="#ffffff" />
+
+    <EditText
+        android:id="@+id/subject"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="132dp"
+        android:hint="Maths Lec-1 21-dec"
+        android:inputType="text" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/subject"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="86dp"
+        android:text="Enter Subject TAG :"
+        android:textStyle="bold" />
 
 </RelativeLayout>

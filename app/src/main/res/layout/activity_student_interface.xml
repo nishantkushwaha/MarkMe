@@ -12,14 +12,32 @@
         android:layout_width="match_parent"
         android:layout_height="312dp"
         android:layout_weight="0.97" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textStatus"
-        android:text="wait..."
-        android:textColor="#000000"
-        android:textSize="20sp"/>
 
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/teachid"
+        android:inputType="text"
+        android:layout_margin="15dp"
+        android:hint="Enter Teacher's ID"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/subjectTag"
+        android:inputType="text"
+        android:layout_margin="15dp"
+        android:hint="Subject TAG"/>
+    <Button
+        android:id="@+id/MARK"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:layout_margin="15dp"
+        android:background="#000000"
+        android:text="MARK Attendance"
+        android:onClick="mark"
+        android:textColor="#ffffff"/>
 
     <Button
         android:id="@+id/scan"
@@ -28,16 +46,14 @@
         android:layout_gravity="bottom"
         android:layout_margin="15dp"
         android:background="#000000"
-        android:text="Search Me"
-        android:textColor="#ffffff"/>
-    <Button
-        android:id="@+id/MARK"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="bottom"
-        android:layout_margin="15dp"
-        android:background="#000000"
-        android:text="MARK"
-        android:onClick="mark"
-        android:textColor="#ffffff"/>
+        android:text="Search Me Again"
+        android:textColor="#ffffff" />
+
+    <TextView
+        android:id="@+id/textStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="wait..."
+        android:textColor="#000000"
+        android:textSize="20sp" />
 </LinearLayout>
