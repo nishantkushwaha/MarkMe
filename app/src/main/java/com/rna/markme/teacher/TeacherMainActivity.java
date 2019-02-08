@@ -54,7 +54,6 @@ public class TeacherMainActivity extends AppCompatActivity {
         txt.setText(email.substring(0, email.length() - 10));
         wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         hotspot = new Hotspot(this);
-        hotspot.start("Hotspot-Android", "12345678");
 
 
     }
@@ -87,6 +86,7 @@ public class TeacherMainActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<Void> task) {
                     c=sub;
                     Toast.makeText(TeacherMainActivity.this, "SLOT CREATED", Toast.LENGTH_SHORT).show();
+                    hotspot.start("Hotspot-Android", "12345678");
 
                 }
             }).addOnFailureListener(new OnFailureListener() {
@@ -100,13 +100,16 @@ public class TeacherMainActivity extends AppCompatActivity {
     }
 
     public void getAttendance(View view) {
-        if (TextUtils.isEmpty(c)) {
-            Toast.makeText(TeacherMainActivity.this, "Make a slot first", Toast.LENGTH_SHORT).show();
-        } else {
+//        if (TextUtils.isEmpty(c)) {
+//            Toast.makeText(TeacherMainActivity.this, "Mark a slot first", Toast.LENGTH_SHORT).show();
+//        } else {
+        sub=subject.getText().toString();
+            hotspot.stop();
+            wifiManager.setWifiEnabled(true);
             Intent intent = new Intent(TeacherMainActivity.this, TeacherInterfaceActivity.class);
             intent.putExtra("subTag", sub);
             startActivity(intent);
-        }
+//        }
     }
 
     public String getBssid(){

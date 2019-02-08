@@ -78,13 +78,19 @@ public class TeacherInterfaceActivity extends AppCompatActivity {
 
                     if (task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
+                        if(document.exists()){
                         Map<String, Object> user = new HashMap<>();
                         user=document.getData();
                         for (String s : user.keySet()) {
                             arraylist.add(s);
                             adapter.notifyDataSetChanged();
+                        }}
+                        else {
+                            Toast.makeText(TeacherInterfaceActivity.this, "No such document", Toast.LENGTH_SHORT).show();
+
                         }
                     } else {
+                        Toast.makeText(TeacherInterfaceActivity.this, "Failed : Try Again", Toast.LENGTH_SHORT).show();
 
                     }
 

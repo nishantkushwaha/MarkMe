@@ -17,6 +17,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Enter email id"
+        android:textColor="#007aff"
+        android:textColorHint="#90007aff"
         android:id="@+id/userEmail"
         />
 
@@ -24,6 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Enter password"
+        android:textColor="#ca000000"
         android:id="@+id/userPass"
         />
 
@@ -31,9 +34,9 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:onClick="loginButtonClicked"
-        android:text="Login"
+        android:text="Teacher Login"
         android:layout_marginTop="5dp"
-        android:background="#000000"
+        android:background="#ca000000"
         android:textColor="#ffffff"
         />
 
