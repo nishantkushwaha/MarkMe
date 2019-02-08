@@ -31,6 +31,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 import com.rna.markme.R;
+import com.rna.markme.TouchIdAuth;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -106,50 +107,58 @@ public class StudentInterfaceActivity extends AppCompatActivity implements View.
             Toast.makeText(this, "Enter teacher id && Subject TAG", Toast.LENGTH_SHORT).show();
         } else {
             if ( b==true) {
-                ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-                if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
-                        connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
-                    //we are connected to a network
-                    connected = true;
-                } else
-                    connected = false;
-                if (connected == true) {
-                    Toast.makeText(this, "Wait your Attendance is being marked", Toast.LENGTH_SHORT).show();
-                    final Map<String, Object> user = new HashMap<>();
-                    user.put(email, true);
-                    db.collection(id).document(subTag).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                            if (task.isSuccessful()) {
-                                DocumentSnapshot document = task.getResult();
-                                if (document.exists()) {
-                                    db.collection(id).document(subTag).set(user,SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            Toast.makeText(StudentInterfaceActivity.this, "Attendance Marked", Toast.LENGTH_SHORT).show();
-
-                                        }
-                                    }).addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Toast.makeText(StudentInterfaceActivity.this, "Faliure: Try Again", Toast.LENGTH_SHORT).show();
-
-                                        }
-                                    });
-                                } else {
-                                    Toast.makeText(StudentInterfaceActivity.this, "No such document", Toast.LENGTH_SHORT).show();
-
-                                }
-                            }
-                            else{
-                                Toast.makeText(StudentInterfaceActivity.this, "Faliure: Try Again", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-                } else {
-                    Toast.makeText(this, "Please Turn on your Internet", Toast.LENGTH_SHORT).show();
-                }
-            } else {
+                Intent intent = new Intent(StudentInterfaceActivity.this,TouchIdAuth.class);
+                intent.putExtra("emailp",email);
+                intent.putExtra("idp",id);
+                intent.putExtra("subTagp",subTag);
+                startActivity(intent);
+            }
+// {
+//                ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+//                if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+//                        connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+//                    //we are connected to a network
+//                    connected = true;
+//                } else
+//                    connected = false;
+//                if (connected == true) {
+//                    Toast.makeText(this, "Wait your Attendance is being marked", Toast.LENGTH_SHORT).show();
+//                    final Map<String, Object> user = new HashMap<>();
+//                    user.put(email, true);
+//                    db.collection(id).document(subTag).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//                        @Override
+//                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                            if (task.isSuccessful()) {
+//                                DocumentSnapshot document = task.getResult();
+//                                if (document.exists()) {
+//                                    db.collection(id).document(subTag).set(user,SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                                        @Override
+//                                        public void onComplete(@NonNull Task<Void> task) {
+//                                            Toast.makeText(StudentInterfaceActivity.this, "Attendance Marked", Toast.LENGTH_SHORT).show();
+//
+//                                        }
+//                                    }).addOnFailureListener(new OnFailureListener() {
+//                                        @Override
+//                                        public void onFailure(@NonNull Exception e) {
+//                                            Toast.makeText(StudentInterfaceActivity.this, "Faliure: Try Again", Toast.LENGTH_SHORT).show();
+//
+//                                        }
+//                                    });
+//                                } else {
+//                                    Toast.makeText(StudentInterfaceActivity.this, "No such document", Toast.LENGTH_SHORT).show();
+//
+//                                }
+//                            }
+//                            else{
+//                                Toast.makeText(StudentInterfaceActivity.this, "Faliure: Try Again", Toast.LENGTH_SHORT).show();
+//                            }
+//                        }
+//                    });
+//                } else {
+//                    Toast.makeText(this, "Please Turn on your Internet", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+                else {
                 Toast.makeText(this, "You are not inside class", Toast.LENGTH_SHORT).show();
             }
 
