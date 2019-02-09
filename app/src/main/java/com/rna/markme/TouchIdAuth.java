@@ -114,6 +114,7 @@ public class TouchIdAuth extends AppCompatActivity {
 
         }
     }
+
     public static void markAttendance(final Context context){
 //        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 //        if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
@@ -189,6 +190,11 @@ public class TouchIdAuth extends AppCompatActivity {
 
         }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        finishAffinity();
     }
 
     @TargetApi(Build.VERSION_CODES.M)

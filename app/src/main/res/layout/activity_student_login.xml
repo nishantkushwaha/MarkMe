@@ -18,6 +18,7 @@
         android:layout_height="wrap_content"
         android:hint="Enter email id"
         android:textColor="#007aff"
+        app:fontFamily="@font/rubik_medium"
         android:textColorHint="#90007aff"
         android:id="@+id/userEmail"
         />
@@ -27,6 +28,7 @@
         android:layout_height="wrap_content"
         android:hint="Enter password"
         android:textColor="#ca000000"
+        app:fontFamily="@font/rubik_medium"
         android:id="@+id/userPass"
         />
 
@@ -36,6 +38,7 @@
         android:layout_marginTop="5dp"
         android:onClick="loginButtonClicked"
         android:text="Student Login"
+        app:fontFamily="@font/rubik_medium"
         android:background="#007aff"
         android:textColor="#ffffff"
         />

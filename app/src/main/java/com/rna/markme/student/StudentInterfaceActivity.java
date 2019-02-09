@@ -1,15 +1,18 @@
 package com.rna.markme.student;
 
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -53,6 +56,8 @@ public class StudentInterfaceActivity extends AppCompatActivity implements View.
     ArrayAdapter adapter;
     boolean b = false;
     boolean connected = false;
+    static public final int REQUEST_LOCATION = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +83,7 @@ public class StudentInterfaceActivity extends AppCompatActivity implements View.
         info = wifi.getConnectionInfo();
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, arraylist);
         lv.setAdapter(adapter);
-        scanWifiNetworks();
+        //scanWifiNetworks();
 
 
     }
@@ -93,6 +98,7 @@ public class StudentInterfaceActivity extends AppCompatActivity implements View.
         for (String string : arraylist) {
             if (string.equals(bssid)) {
                 b = true;
+                //mark(findViewById(R.id.MARK));
                 return "Found in Class \uD83D\uDC4D\uD83C\uDFFB";
             }
         }
@@ -104,7 +110,7 @@ public class StudentInterfaceActivity extends AppCompatActivity implements View.
         id = teachid.getText().toString();
         subTag=subjectTag.getText().toString();
         if (TextUtils.isEmpty(id)||TextUtils.isEmpty(subTag)) {
-            Toast.makeText(this, "Enter teacher id && Subject TAG", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Enter teacher id && Lecture-TAG", Toast.LENGTH_SHORT).show();
         } else {
             if ( b==true) {
                 Intent intent = new Intent(StudentInterfaceActivity.this,TouchIdAuth.class);
@@ -167,7 +173,14 @@ public class StudentInterfaceActivity extends AppCompatActivity implements View.
 
     public void onClick(View view) {
         textStatus.setText("wait...");
-        scanWifiNetworks();
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},REQUEST_LOCATION);
+        }else{
+            teachid.setFocusable(false);
+            subjectTag.setFocusable(false);
+            scanWifiNetworks();
+        }
+
     }
 
     private void scanWifiNetworks() {
@@ -207,7 +220,7 @@ public class StudentInterfaceActivity extends AppCompatActivity implements View.
         id = teachid.getText().toString();
         subTag=subjectTag.getText().toString();
         if (TextUtils.isEmpty(id)||TextUtils.isEmpty(subTag)) {
-            Toast.makeText(this, "Enter teacher id && Subject TAG", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Enter teacher id && Lecture-TAG", Toast.LENGTH_SHORT).show();
         } else {
                 ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
                 if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
@@ -245,4 +258,19 @@ public class StudentInterfaceActivity extends AppCompatActivity implements View.
     }
 
 
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String[] permissions,
+                                           int[] grantResults) {
+        if (requestCode == REQUEST_LOCATION) {
+            if(grantResults.length == 1
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                scanWifiNetworks();// <-- Start Beemray here
+            } else {
+                Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
+// Permission was denied or request was cancelled
+            }
+        }
+    }
 }

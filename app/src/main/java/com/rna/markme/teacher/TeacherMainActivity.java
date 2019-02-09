@@ -37,7 +37,7 @@ public class TeacherMainActivity extends AppCompatActivity {
     DatabaseReference ref;
     Hotspot hotspot;
     Boolean b=false;
-    String email,sub,c="";
+    String email,sub;
     EditText subject;
     WifiManager wifiManager;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -75,7 +75,7 @@ public class TeacherMainActivity extends AppCompatActivity {
     public void markSlot(View view) {
         sub=subject.getText().toString();
         if(TextUtils.isEmpty(sub)){
-            Toast.makeText(this,"Enter subject TAG",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"Enter Lecture-TAG",Toast.LENGTH_SHORT).show();
         }
         else {
 
@@ -84,7 +84,7 @@ public class TeacherMainActivity extends AppCompatActivity {
             db.collection(email.substring(0, email.length() - 10)).document(sub).set(Bssid, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
-                    c=sub;
+
                     Toast.makeText(TeacherMainActivity.this, "SLOT CREATED", Toast.LENGTH_SHORT).show();
                     hotspot.start("Hotspot-Android", "12345678");
 
@@ -100,16 +100,16 @@ public class TeacherMainActivity extends AppCompatActivity {
     }
 
     public void getAttendance(View view) {
-//        if (TextUtils.isEmpty(c)) {
-//            Toast.makeText(TeacherMainActivity.this, "Mark a slot first", Toast.LENGTH_SHORT).show();
-//        } else {
+        if (TextUtils.isEmpty(subject.getText().toString())) {
+            Toast.makeText(TeacherMainActivity.this, "Enter Lecture-TAG", Toast.LENGTH_SHORT).show();
+        } else {
         sub=subject.getText().toString();
             hotspot.stop();
             wifiManager.setWifiEnabled(true);
             Intent intent = new Intent(TeacherMainActivity.this, TeacherInterfaceActivity.class);
             intent.putExtra("subTag", sub);
             startActivity(intent);
-//        }
+        }
     }
 
     public String getBssid(){

@@ -1,12 +1,15 @@
 package com.rna.markme;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -38,11 +41,16 @@ public class MainActivity extends AppCompatActivity {
             ref.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    String Type = dataSnapshot.getValue().toString();
-                    if (Type.equals("student")) {
+                    String TYPE = dataSnapshot.child("type").getValue().toString();
+                    String ANDROIDID = dataSnapshot.child("android").getValue().toString();
+                    if (TYPE.equals("student")) {
+                        if(ANDROIDID.equals(Settings.Secure.getString(getContentResolver(),Settings.Secure.ANDROID_ID)))
                         startActivity(new Intent(MainActivity.this, StudentLoginActivity.class));
+                        else Toast.makeText(MainActivity.this, "Device Doesn't Match", Toast.LENGTH_SHORT).show();
                     } else {
+                        if(ANDROIDID.equals(Settings.Secure.getString(getContentResolver(),Settings.Secure.ANDROID_ID)))
                         startActivity(new Intent(MainActivity.this, TeacherLoginActivity.class));
+                        else Toast.makeText(MainActivity.this, "Device Doesn't Match", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -69,5 +77,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void TeacherAct(View view) {
         startActivity(new Intent(MainActivity.this, TeacherLoginActivity.class));
+    }
+
+    public void register(View view) {
+        Intent numbersIntent = new Intent("android.intent.action.SENDTO", Uri.fromParts("mailto","markmeattendance@gmail.com",null));
+        numbersIntent.putExtra(Intent.EXTRA_SUBJECT, "New Registration");
+        numbersIntent.putExtra(Intent.EXTRA_TEXT, "Registration No.: \n\n" +
+                "Android ID: "+Settings.Secure.getString(getContentResolver(),Settings.Secure.ANDROID_ID));
+        startActivity(numbersIntent);
     }
 }

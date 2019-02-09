@@ -19,8 +19,22 @@
         android:layout_height="50dp"
         android:layout_gravity="bottom"
         android:layout_marginTop="10dp"
-        android:background="#007aff"
+        android:background="#ca000000"
         android:text="Refresh"
+        app:fontFamily="@font/rubik_medium"
         android:onClick="refresh"
+        android:textColor="#ffffff"/>
+    <Button
+        android:id="@+id/saveAtt"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:background="#007aff"
+        android:focusable="true"
+        android:clickable="true"
+        android:text="Save"
+        app:fontFamily="@font/rubik_medium"
         android:textColor="#ffffff"/>
 </LinearLayout>

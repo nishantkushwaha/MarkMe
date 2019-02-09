@@ -1,6 +1,7 @@
 package com.rna.markme.student;
 
 import android.content.Intent;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -23,11 +24,13 @@ public class StudentMainActivity extends AppCompatActivity {
         String email = user.getEmail();
         txt=(TextView)findViewById(R.id.textView);
         txt.setText(email.substring(0, email.length() - 10));
+        //txt.setText(Settings.Secure.getString(getContentResolver(),Settings.Secure.ANDROID_ID));
     }
 
     @Override
     public void onBackPressed() {
         finishAffinity();
+
     }
 
     public void signOut(View view){

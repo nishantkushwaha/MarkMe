@@ -1,6 +1,7 @@
 package com.rna.markme.student;
 
 import android.content.Intent;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,13 +14,20 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.rna.markme.MainActivity;
 import com.rna.markme.R;
+import com.rna.markme.teacher.TeacherLoginActivity;
 
 public class StudentLoginActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener authstateListener;
-
+    DatabaseReference ref;
     private EditText emailText;
     private EditText passText;
     @Override
@@ -37,8 +45,35 @@ public class StudentLoginActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
 
                 if(firebaseAuth.getCurrentUser()!=null){
-                    Intent intent = new Intent(StudentLoginActivity.this,StudentMainActivity.class);
-                    startActivity(intent);
+                        String uid = firebaseAuth.getCurrentUser().getUid();
+                        ref = FirebaseDatabase.getInstance().getReference().child(uid);
+                        ref.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                String TYPE = dataSnapshot.child("type").getValue().toString();
+                                String ANDROIDID = dataSnapshot.child("android").getValue().toString();
+                                if (TYPE.equals("student")) {
+                                    if(ANDROIDID.equals(Settings.Secure.getString(getContentResolver(),Settings.Secure.ANDROID_ID))){
+                                        startActivity(new Intent(StudentLoginActivity.this, StudentMainActivity.class));
+                                    }
+                                    else {
+
+                                        Toast.makeText(StudentLoginActivity.this, "Device doesn't match", Toast.LENGTH_SHORT).show();
+                                        mAuth.signOut();
+                                    }
+                                }
+                                else{
+                                    mAuth.signOut();
+                                    Toast.makeText(StudentLoginActivity.this, "Something goes wrong!", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+
                 }
             }
         };

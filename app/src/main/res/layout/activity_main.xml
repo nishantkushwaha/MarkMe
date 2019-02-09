@@ -14,24 +14,34 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:id="@+id/txp"
-        android:textSize="30sp"></TextView>
+        app:fontFamily="@font/rubik_medium"
+        android:textSize="20sp"/>
     <RelativeLayout
         android:id="@+id/Rtlayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:gravity="center"
         android:background="#ffffff">
-        />
 
-
+        <TextView
+            android:id="@+id/hdr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:text="MarkMe"
+            android:textColor="#007aff"
+            android:textSize="50sp"
+            app:fontFamily="@font/rubik_medium" />
         <Button
             android:id="@+id/StudentBtn"
-            android:layout_width="150dp"
+            android:layout_width="160dp"
             android:layout_height="70dp"
             android:onClick="StudentAct"
+            app:fontFamily="@font/rubik_medium"
+            android:layout_above="@+id/TeacherBtn"
             android:text="Student"
+            android:layout_centerHorizontal="true"
             android:layout_marginBottom="5dp"
             android:background="#007aff"
             android:textColor="#ffffff"
@@ -39,15 +49,31 @@
 
         <Button
             android:id="@+id/TeacherBtn"
-            android:layout_width="150dp"
+            android:layout_width="160dp"
             android:layout_height="70dp"
-            android:layout_below="@+id/StudentBtn"
             android:gravity="center"
+            app:fontFamily="@font/rubik_medium"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
             android:textSize="20sp"
             android:onClick="TeacherAct"
             android:text="Teacher"
             android:background="#ca000000"
             android:textColor="#ffffff"/>
+        <Button
+            android:id="@+id/regBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fontFamily="@font/rubik_medium"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:text="Registration"
+            android:onClick="register"
+            android:layout_marginBottom="20dp"
+            android:background="#007aff"
+            android:textColor="#ffffff"
+            android:padding="4dp"
+            android:textSize="14sp"/>
     </RelativeLayout>
 
 

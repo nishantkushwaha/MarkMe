@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="10dp"
     android:layout_width="match_parent"
@@ -21,6 +22,7 @@
         android:inputType="text"
         android:textColor="#007aff"
         android:textColorHint="#90007aff"
+        app:fontFamily="@font/rubik_medium"
         android:layout_margin="15dp"
         android:hint="Enter Teacher's ID"/>
     <EditText
@@ -29,6 +31,7 @@
         android:id="@+id/subjectTag"
         android:inputType="text"
         android:textColor="#ca000000"
+        app:fontFamily="@font/rubik_medium"
         android:layout_margin="15dp"
         android:hint="Lecture-TAG"/>
     <Button
@@ -39,6 +42,7 @@
         android:layout_margin="15dp"
         android:background="#007aff"
         android:text="MARK Attendance"
+        app:fontFamily="@font/rubik_medium"
         android:onClick="mark"
         android:textColor="#ffffff"/>
 
@@ -49,14 +53,18 @@
         android:layout_gravity="bottom"
         android:layout_margin="15dp"
         android:background="#ca000000"
-        android:text="Search Me Again"
+        android:text="Search Me"
+        app:fontFamily="@font/rubik_medium"
         android:textColor="#ffffff" />
 
     <TextView
         android:id="@+id/textStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="wait..."
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        app:fontFamily="@font/rubik_medium"
+        android:text="Enter both values and press\nSearch Me"
         android:textColor="#007aff"
-        android:textSize="20sp" />
+        android:textSize="16sp" />
 </LinearLayout>

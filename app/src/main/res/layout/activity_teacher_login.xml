@@ -17,6 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Enter email id"
+        app:fontFamily="@font/rubik_medium"
         android:textColor="#007aff"
         android:textColorHint="#90007aff"
         android:id="@+id/userEmail"
@@ -26,6 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Enter password"
+        app:fontFamily="@font/rubik_medium"
         android:textColor="#ca000000"
         android:id="@+id/userPass"
         />
@@ -35,6 +37,7 @@
         android:layout_height="50dp"
         android:onClick="loginButtonClicked"
         android:text="Teacher Login"
+        app:fontFamily="@font/rubik_medium"
         android:layout_marginTop="5dp"
         android:background="#ca000000"
         android:textColor="#ffffff"
