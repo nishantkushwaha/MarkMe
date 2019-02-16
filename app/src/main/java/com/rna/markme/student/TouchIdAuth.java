@@ -1,4 +1,4 @@
-package com.rna.markme;
+package com.rna.markme.student;
 
 import android.Manifest;
 import android.annotation.TargetApi;
@@ -6,8 +6,6 @@ import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.hardware.fingerprint.FingerprintManager;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Build;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyPermanentlyInvalidatedException;
@@ -26,7 +24,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
-import com.rna.markme.student.StudentInterfaceActivity;
+import com.rna.markme.R;
 
 import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
@@ -47,12 +45,12 @@ import javax.crypto.SecretKey;
 
 public class TouchIdAuth extends AppCompatActivity {
     private TextView mHeadingLabel;
-    private ImageView mFingerprintImage;
+     static private ImageView mFingerprintImage;
     static private TextView mParaLabel;
 
     private FingerprintManager fingerprintManager;
     private KeyguardManager keyguardManager;
-    public static String id,subTag,email;
+    public static String teacherID,lectureTag,studentID;
     private KeyStore keyStore;
     private Cipher cipher;
     private String KEY_NAME = "AndroidKey";
@@ -62,9 +60,9 @@ public class TouchIdAuth extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_touch_id_auth);
-        id=getIntent().getExtras().getString("idp");
-        subTag=getIntent().getExtras().getString("subTagp");
-        email=getIntent().getExtras().getString("emailp");
+        teacherID=getIntent().getExtras().getString("idp");
+        lectureTag=getIntent().getExtras().getString("subTagp");
+        studentID=getIntent().getExtras().getString("emailp");
 
         mHeadingLabel = (TextView) findViewById(R.id.headingLabel);
         mFingerprintImage = (ImageView) findViewById(R.id.fingerprintImage);
@@ -126,33 +124,41 @@ public class TouchIdAuth extends AppCompatActivity {
         if (true) {
             Toast.makeText(context, "Wait your Attendance is being marked", Toast.LENGTH_SHORT).show();
             final Map<String, Object> user = new HashMap<>();
-            user.put(email, true);
-            db.collection(id).document(subTag).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            user.put(studentID, true);
+            db.collection(teacherID).document(lectureTag).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if (task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
                         if (document.exists()) {
-                            db.collection(id).document(subTag).set(user,SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            db.collection(teacherID).document(lectureTag).set(user,SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     Toast.makeText(context, "Attendance Marked", Toast.LENGTH_SHORT).show();
+                                    mFingerprintImage.setImageResource(R.mipmap.action_done_web2);
+                                    mParaLabel.setTextColor(ContextCompat.getColor(context, R.color.colorgreen));
                                     mParaLabel.setText("Attendance Marked");
 
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
+                                    mFingerprintImage.setImageResource(R.mipmap.action_close);
+                                    mParaLabel.setText("Try Again\nAttendance Not Marked");
                                     Toast.makeText(context, "Faliure: Try Again", Toast.LENGTH_SHORT).show();
 
                                 }
                             });
                         } else {
+                            mFingerprintImage.setImageResource(R.mipmap.action_close);
+                            mParaLabel.setText("No such document");
                             Toast.makeText(context, "No such document", Toast.LENGTH_SHORT).show();
 
                         }
                     }
                     else{
+                        mFingerprintImage.setImageResource(R.mipmap.action_close);
+                        mParaLabel.setText("Try Again\nAttendance Not Marked");
                         Toast.makeText(context, "Faliure: Try Again", Toast.LENGTH_SHORT).show();
                     }
                 }

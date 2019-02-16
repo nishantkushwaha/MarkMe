@@ -9,7 +9,7 @@
     android:paddingTop="16dp"
     android:paddingRight="16dp"
     android:paddingBottom="16dp"
-    tools:context=".teacher.TeacherMainActivity">
+    tools:context=".teacher.TeacherAccount">
 
     <TextView
         android:id="@+id/textView3"
@@ -18,6 +18,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:text="Teacher Account"
+        app:layout_constraintVertical_bias="0"
         app:fontFamily="@font/rubik_medium"
         android:textColor="#ca000000"
         android:textSize="30sp"
@@ -33,14 +34,16 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
         android:text="Sucess"
-        app:fontFamily="@font/rubik_medium"
         android:textColor="#007aff"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/textView4"
+        app:fontFamily="@font/rubik_medium"
+        app:layout_constraintBottom_toTopOf="@+id/subject"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button4"
@@ -76,7 +79,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#007aff"
-        android:onClick="markSlot"
+        android:onClick="makeSlot"
         android:padding="8dp"
         android:text="Make Slot"
         app:fontFamily="@font/rubik_medium"
@@ -98,18 +101,35 @@
         app:layout_constraintBottom_toTopOf="@+id/button2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Enter Lecture-TAG :"
-        app:fontFamily="@font/rubik_medium"
         android:textColor="#ca000000"
         android:textStyle="bold"
+        android:paddingLeft="3dp"
+        app:fontFamily="@font/rubik_medium"
         app:layout_constraintBottom_toTopOf="@+id/subject"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/pb_loading_indicator"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/subject" />
 
 </android.support.constraint.ConstraintLayout>

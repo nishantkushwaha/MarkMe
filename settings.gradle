@@ -1,1 +1,1 @@
-include ':app', ':hotspot'
+include ':app', ':HotspotAPI'

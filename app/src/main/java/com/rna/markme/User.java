@@ -18,10 +18,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.rna.markme.student.StudentLoginActivity;
-import com.rna.markme.teacher.TeacherLoginActivity;
+import com.rna.markme.student.StudentLogin;
+import com.rna.markme.teacher.TeacherLogin;
 
-public class MainActivity extends AppCompatActivity {
+public class User extends AppCompatActivity {
 
     private FirebaseAuth.AuthStateListener authstateListener;
     DatabaseReference ref;
@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_user);
         RelativeLayout rt = (RelativeLayout) findViewById(R.id.Rtlayout);
         TextView txp = (TextView) findViewById(R.id.txp);
         rt.setVisibility(View.GONE);
@@ -45,12 +45,12 @@ public class MainActivity extends AppCompatActivity {
                     String ANDROIDID = dataSnapshot.child("android").getValue().toString();
                     if (TYPE.equals("student")) {
                         if(ANDROIDID.equals(Settings.Secure.getString(getContentResolver(),Settings.Secure.ANDROID_ID)))
-                        startActivity(new Intent(MainActivity.this, StudentLoginActivity.class));
-                        else Toast.makeText(MainActivity.this, "Device Doesn't Match", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(User.this, StudentLogin.class));
+                        else Toast.makeText(User.this, "Device Doesn't Match", Toast.LENGTH_SHORT).show();
                     } else {
                         if(ANDROIDID.equals(Settings.Secure.getString(getContentResolver(),Settings.Secure.ANDROID_ID)))
-                        startActivity(new Intent(MainActivity.this, TeacherLoginActivity.class));
-                        else Toast.makeText(MainActivity.this, "Device Doesn't Match", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(User.this, TeacherLogin.class));
+                        else Toast.makeText(User.this, "Device Doesn't Match", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -72,17 +72,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void StudentAct(View view) {
-        startActivity(new Intent(MainActivity.this, StudentLoginActivity.class));
+        startActivity(new Intent(User.this, StudentLogin.class));
     }
 
     public void TeacherAct(View view) {
-        startActivity(new Intent(MainActivity.this, TeacherLoginActivity.class));
+        startActivity(new Intent(User.this, TeacherLogin.class));
     }
 
     public void register(View view) {
         Intent numbersIntent = new Intent("android.intent.action.SENDTO", Uri.fromParts("mailto","markmeattendance@gmail.com",null));
         numbersIntent.putExtra(Intent.EXTRA_SUBJECT, "New Registration");
-        numbersIntent.putExtra(Intent.EXTRA_TEXT, "Registration No.: \n\n" +
+        numbersIntent.putExtra(Intent.EXTRA_TEXT, "Registration No.:\nType: \n\n" +
                 "Android ID: "+Settings.Secure.getString(getContentResolver(),Settings.Secure.ANDROID_ID));
         startActivity(numbersIntent);
     }

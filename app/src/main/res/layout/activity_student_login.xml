@@ -9,38 +9,68 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="16dp"
-    tools:context=".student.StudentLoginActivity"
-    android:background="#ffffff"
-    android:gravity="center">
+    tools:context=".student.StudentLogin"
+    android:background="#ffffff">
 
-    <EditText
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Enter email id"
-        android:textColor="#007aff"
-        app:fontFamily="@font/rubik_medium"
-        android:textColorHint="#90007aff"
-        android:id="@+id/userEmail"
-        />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter password"
-        android:textColor="#ca000000"
-        app:fontFamily="@font/rubik_medium"
-        android:id="@+id/userPass"
-        />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="5dp"
-        android:onClick="loginButtonClicked"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
         android:text="Student Login"
+        android:layout_gravity="center_horizontal"
         app:fontFamily="@font/rubik_medium"
-        android:background="#007aff"
-        android:textColor="#ffffff"
-        />
+        android:textColor="#ca000000"
+        android:textSize="30sp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/lin"
+        android:paddingTop="60dp">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter email id"
+            android:textColor="#007aff"
+            app:fontFamily="@font/rubik_medium"
+            android:textColorHint="#90007aff"
+            android:id="@+id/userEmail"
+            />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter password"
+            android:textColor="#ca000000"
+            app:fontFamily="@font/rubik_medium"
+            android:id="@+id/userPass"
+            />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:onClick="loginButtonClicked"
+            android:text="Login"
+            app:fontFamily="@font/rubik_medium"
+            android:background="#007aff"
+            android:textColor="#ffffff"
+            />
+    </LinearLayout>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:layout_gravity="center">
+    <ProgressBar
+        android:id="@+id/pb_loading_indicator"
+        android:layout_height="42dp"
+        android:layout_width="42dp"
+        android:layout_gravity="center"
+        android:visibility="invisible" />
+</RelativeLayout>
+
 
 </LinearLayout>

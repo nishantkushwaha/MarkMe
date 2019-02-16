@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -25,7 +26,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.rna.markme.R;
-import com.rna.markme.student.StudentMainActivity;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -35,92 +35,99 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TeacherInterfaceActivity extends AppCompatActivity {
+public class GetAttendance extends AppCompatActivity {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    ArrayList<String> arraylist = new ArrayList<>();
+    ArrayList<String> presentStudents = new ArrayList<>();
     ArrayAdapter adapter;
     ListView lv;
     WifiManager wifiManager;
-    String sub,email,id,attString="";
+    String lectureTag,email,teacherID,attString="";
     boolean connected = false;
     Button saveAtt;
+    private ProgressBar mLoadingIndicator;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_teacher_interface);
+        setContentView(R.layout.activity_get_attendance);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         saveAtt=findViewById(R.id.saveAtt);
         email = user.getEmail();
-        id=email.substring(0, email.length() - 10);
+        teacherID=email.substring(0, email.length() - 10);
         Intent intent=getIntent();
-        sub=intent.getStringExtra("subTag");
-        adapter =  new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,arraylist);
+        lectureTag=intent.getStringExtra("subTag");
+        mLoadingIndicator = (ProgressBar) findViewById(R.id.pb_loading_indicator);
+        adapter =  new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,presentStudents);
         lv = (ListView)findViewById(R.id.data);
         lv.setAdapter(adapter);
-        getData();
+        getData(teacherID,lectureTag);
         saveAtt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(!attString.equals("")){
                     if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
-                        ActivityCompat.requestPermissions(TeacherInterfaceActivity.this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1000);
+                        ActivityCompat.requestPermissions(GetAttendance.this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1000);
                     }else{
-                        saveTextAsFile(sub,attString);
+                        saveAttendance(lectureTag,attString);
                     }
 
                 }else {
-                    Toast.makeText(TeacherInterfaceActivity.this,"No Data",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(GetAttendance.this,"No Data",Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
     public void refresh(View view){
-        arraylist.clear();
+        mLoadingIndicator.setVisibility(View.VISIBLE);
+        presentStudents.clear();
         adapter.clear();
-        getData();
+        getData(teacherID,lectureTag);
 
     }
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(this, TeacherMainActivity.class));
+        startActivity(new Intent(this, TeacherAccount.class));
         finishAffinity();
     }
 
-    public void getData(){
+    public void getData(String teacherID, String lectureTag){
+
         ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
         if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
                 connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
             //we are connected to a network
             connected = true;
         }
-        else
-            connected = false;
+        else{
+
+            mLoadingIndicator.setVisibility(View.INVISIBLE);
+            connected = false;}
         if(connected==true){
-            db.collection(id).document(sub).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            db.collection(teacherID).document(lectureTag).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 
                     if (task.isSuccessful()) {
+                        mLoadingIndicator.setVisibility(View.INVISIBLE);
                         DocumentSnapshot document = task.getResult();
                         if(document.exists()){
                         Map<String, Object> user = new HashMap<>();
                         user=document.getData();
                             attString="";
                         for (String s : user.keySet()) {
-                            arraylist.add(s);
+                            presentStudents.add(s);
                             attString+= s + "\n";
 
                         }
                             adapter.notifyDataSetChanged();
                         }
                         else {
-                            Toast.makeText(TeacherInterfaceActivity.this, "No such document", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(GetAttendance.this, "No such document", Toast.LENGTH_SHORT).show();
 
                         }
                     } else {
-                        Toast.makeText(TeacherInterfaceActivity.this, "Failed : Try Again", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(GetAttendance.this, "Failed : Try Again", Toast.LENGTH_SHORT).show();
 
                     }
 
@@ -133,7 +140,7 @@ public class TeacherInterfaceActivity extends AppCompatActivity {
     }
 
 
-    public void saveTextAsFile(String filename, String content) {
+    public void saveAttendance(String filename, String content) {
         String fileName= filename + ".txt";
 
         File folder = new File(Environment.getExternalStorageDirectory() +
@@ -172,7 +179,7 @@ public class TeacherInterfaceActivity extends AppCompatActivity {
         if (requestCode == 1000) {
             if(grantResults.length == 1
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                saveTextAsFile(sub,attString);// <-- Start Beemray here
+                saveAttendance(lectureTag,attString);// <-- Start Beemray here
             } else {
                 Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
 // Permission was denied or request was cancelled

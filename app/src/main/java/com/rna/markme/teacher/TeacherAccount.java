@@ -8,7 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,7 +23,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 import com.knexis.hotspot.Hotspot;
-import com.rna.markme.MainActivity;
+import com.rna.markme.User;
 import com.rna.markme.R;
 
 import net.cryptobrewery.macaddress.MacAddress;
@@ -29,7 +31,7 @@ import net.cryptobrewery.macaddress.MacAddress;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TeacherMainActivity extends AppCompatActivity {
+public class TeacherAccount extends AppCompatActivity {
 
     TextView txt;
     private FirebaseAuth mAuth;
@@ -37,21 +39,23 @@ public class TeacherMainActivity extends AppCompatActivity {
     DatabaseReference ref;
     Hotspot hotspot;
     Boolean b=false;
-    String email,sub;
+    String teacherID,lectureTag;
     EditText subject;
     WifiManager wifiManager;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private ProgressBar mLoadingIndicator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_teacher_main);
+        setContentView(R.layout.activity_teacher_account);
         subject=(EditText)findViewById(R.id.subject);
+        mLoadingIndicator = (ProgressBar) findViewById(R.id.pb_loading_indicator);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        email = user.getEmail();
+        teacherID = user.getEmail();
         String uid = user.getUid();
         txt = (TextView) findViewById(R.id.textView);
-        txt.setText(email.substring(0, email.length() - 10));
+        txt.setText(teacherID.substring(0, teacherID.length() - 10));
         wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         hotspot = new Hotspot(this);
 
@@ -68,31 +72,39 @@ public class TeacherMainActivity extends AppCompatActivity {
         wifiManager.setWifiEnabled(true);
         mAuth = FirebaseAuth.getInstance();
         mAuth.signOut();
-        startActivity(new Intent(TeacherMainActivity.this, MainActivity.class));
+        startActivity(new Intent(TeacherAccount.this, User.class));
         finishAffinity();
     }
 
-    public void markSlot(View view) {
-        sub=subject.getText().toString();
-        if(TextUtils.isEmpty(sub)){
+    public void makeSlot(View view) {
+        mLoadingIndicator.setVisibility(View.VISIBLE);
+        InputMethodManager inputManager = (InputMethodManager)
+                getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        inputManager.hideSoftInputFromWindow((null == getCurrentFocus()) ? null : getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+
+        lectureTag=subject.getText().toString();
+        if(TextUtils.isEmpty(lectureTag)){
             Toast.makeText(this,"Enter Lecture-TAG",Toast.LENGTH_SHORT).show();
         }
         else {
 
             final Map<String, Object> Bssid = new HashMap<>();
             Bssid.put("Bssid", getBssid());
-            db.collection(email.substring(0, email.length() - 10)).document(sub).set(Bssid, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
+            db.collection(teacherID.substring(0, teacherID.length() - 10)).document(lectureTag).set(Bssid, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
-
-                    Toast.makeText(TeacherMainActivity.this, "SLOT CREATED", Toast.LENGTH_SHORT).show();
+                    txt.setText(teacherID.substring(0, teacherID.length() - 10)+"\n Slot Created!");
+                    Toast.makeText(TeacherAccount.this, "SLOT CREATED", Toast.LENGTH_SHORT).show();
                     hotspot.start("Hotspot-Android", "12345678");
+                    mLoadingIndicator.setVisibility(View.INVISIBLE);
 
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(TeacherMainActivity.this, "Faliure: Try Again", Toast.LENGTH_SHORT).show();
+                    txt.setText(teacherID.substring(0, teacherID.length() - 10)+"\n Make Slot Again!");
+                    Toast.makeText(TeacherAccount.this, "Faliure: Try Again", Toast.LENGTH_SHORT).show();
 
                 }
             });
@@ -101,13 +113,13 @@ public class TeacherMainActivity extends AppCompatActivity {
 
     public void getAttendance(View view) {
         if (TextUtils.isEmpty(subject.getText().toString())) {
-            Toast.makeText(TeacherMainActivity.this, "Enter Lecture-TAG", Toast.LENGTH_SHORT).show();
+            Toast.makeText(TeacherAccount.this, "Enter Lecture-TAG", Toast.LENGTH_SHORT).show();
         } else {
-        sub=subject.getText().toString();
+        lectureTag=subject.getText().toString();
             hotspot.stop();
             wifiManager.setWifiEnabled(true);
-            Intent intent = new Intent(TeacherMainActivity.this, TeacherInterfaceActivity.class);
-            intent.putExtra("subTag", sub);
+            Intent intent = new Intent(TeacherAccount.this, GetAttendance.class);
+            intent.putExtra("subTag", lectureTag);
             startActivity(intent);
         }
     }

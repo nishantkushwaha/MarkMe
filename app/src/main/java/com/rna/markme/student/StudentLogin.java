@@ -1,5 +1,6 @@
 package com.rna.markme.student;
 
+import android.content.Context;
 import android.content.Intent;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -7,7 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -19,17 +23,18 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.rna.markme.MainActivity;
 import com.rna.markme.R;
-import com.rna.markme.teacher.TeacherLoginActivity;
 
-public class StudentLoginActivity extends AppCompatActivity {
+public class StudentLogin extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener authstateListener;
     DatabaseReference ref;
     private EditText emailText;
+
     private EditText passText;
+    private LinearLayout lin;
+    private ProgressBar mLoadingIndicator;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +42,8 @@ public class StudentLoginActivity extends AppCompatActivity {
 
         emailText= (EditText) findViewById(R.id.userEmail);
         passText= (EditText) findViewById(R.id.userPass);
+        mLoadingIndicator = (ProgressBar) findViewById(R.id.pb_loading_indicator);
+        lin =findViewById(R.id.lin);
 
         mAuth=FirebaseAuth.getInstance();
 
@@ -54,17 +61,20 @@ public class StudentLoginActivity extends AppCompatActivity {
                                 String ANDROIDID = dataSnapshot.child("android").getValue().toString();
                                 if (TYPE.equals("student")) {
                                     if(ANDROIDID.equals(Settings.Secure.getString(getContentResolver(),Settings.Secure.ANDROID_ID))){
-                                        startActivity(new Intent(StudentLoginActivity.this, StudentMainActivity.class));
+                                        startActivity(new Intent(StudentLogin.this, StudentAccount.class));
                                     }
                                     else {
-
-                                        Toast.makeText(StudentLoginActivity.this, "Device doesn't match", Toast.LENGTH_SHORT).show();
+                                        mLoadingIndicator.setVisibility(View.GONE);
+                                        lin.setVisibility(View.VISIBLE);
+                                        Toast.makeText(StudentLogin.this, "Device doesn't match", Toast.LENGTH_SHORT).show();
                                         mAuth.signOut();
                                     }
                                 }
                                 else{
+                                    mLoadingIndicator.setVisibility(View.GONE);
+                                    lin.setVisibility(View.VISIBLE);
                                     mAuth.signOut();
-                                    Toast.makeText(StudentLoginActivity.this, "Something goes wrong!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(StudentLogin.this, "Something goes wrong!", Toast.LENGTH_SHORT).show();
                                 }
                             }
 
@@ -91,6 +101,10 @@ public class StudentLoginActivity extends AppCompatActivity {
     }
 
     public void loginButtonClicked(View view) {
+        InputMethodManager inputManager = (InputMethodManager)
+                getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        inputManager.hideSoftInputFromWindow((null == getCurrentFocus()) ? null : getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         String email= emailText.getText().toString();
         String pass =passText.getText().toString();
 
@@ -101,12 +115,16 @@ public class StudentLoginActivity extends AppCompatActivity {
 
         else{
             if(email.length()==25){
+                mLoadingIndicator.setVisibility(View.VISIBLE);
+                lin.setVisibility(View.GONE);
                 mAuth.signInWithEmailAndPassword(email,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
                         if(!task.isSuccessful()){
-                            Toast.makeText(StudentLoginActivity.this,"Incorrect Username or password",Toast.LENGTH_LONG).show();
+                            mLoadingIndicator.setVisibility(View.GONE);
+                            lin.setVisibility(View.VISIBLE);
+                            Toast.makeText(StudentLogin.this,"Incorrect Username or password",Toast.LENGTH_LONG).show();
 
                         }
                     }

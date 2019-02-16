@@ -29,7 +29,7 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:27.1.1'
     implementation 'com.github.Badranh:Android-Mac-Address-Util:0.1.0'
     implementation 'com.android.support:design:27.1.1'
-    implementation project(':hotspot')
+    implementation project(':HotspotAPI')
     implementation 'com.android.support:multidex:1.0.3'
 
     implementation 'com.google.firebase:firebase-firestore:17.1.4'

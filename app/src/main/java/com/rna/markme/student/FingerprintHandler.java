@@ -1,30 +1,19 @@
-package com.rna.markme;
+package com.rna.markme.student;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.hardware.fingerprint.FingerprintManager;
-import android.media.Image;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.CancellationSignal;
-import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
-import android.text.TextUtils;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.SetOptions;
-import com.rna.markme.student.StudentInterfaceActivity;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.rna.markme.R;
+import com.rna.markme.student.TouchIdAuth;
 
 @TargetApi(Build.VERSION_CODES.M)
 public class FingerprintHandler extends FingerprintManager.AuthenticationCallback {
@@ -54,7 +43,7 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
     @Override
     public void onAuthenticationFailed() {
 
-        this.update("Auth Failed. ", false);
+        this.update("Authentication Failed\nTry Again ", false);
 
     }
 
@@ -82,11 +71,14 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
         if(b == false){
 
             paraLabel.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
+            imageView.setImageResource(R.mipmap.action_close);
 
         } else {
+            Animation animation= AnimationUtils.loadAnimation(context,R.anim.bounce);
 
             paraLabel.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
-            imageView.setImageResource(R.mipmap.action_done);
+            imageView.setImageResource(R.mipmap.action_done_web);
+            imageView.startAnimation(animation);
             TouchIdAuth.markAttendance(context);
 
         }
