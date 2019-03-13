@@ -7,13 +7,13 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
+import android.os.Bundle;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyPermanentlyInvalidatedException;
 import android.security.keystore.KeyProperties;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -62,7 +62,7 @@ public class TouchIdAuth extends AppCompatActivity {
         setContentView(R.layout.activity_touch_id_auth);
         teacherID=getIntent().getExtras().getString("idp");
         lectureTag=getIntent().getExtras().getString("subTagp");
-        studentID=getIntent().getExtras().getString("emailp");
+        studentID=getIntent().getExtras().getString("studentIDp");
 
         mHeadingLabel = (TextView) findViewById(R.id.headingLabel);
         mFingerprintImage = (ImageView) findViewById(R.id.fingerprintImage);
