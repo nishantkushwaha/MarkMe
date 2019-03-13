@@ -51,6 +51,7 @@ public class TouchIdAuth extends AppCompatActivity {
     private FingerprintManager fingerprintManager;
     private KeyguardManager keyguardManager;
     public static String teacherID,lectureTag,studentID;
+    static Integer level;
     private KeyStore keyStore;
     private Cipher cipher;
     private String KEY_NAME = "AndroidKey";
@@ -63,6 +64,7 @@ public class TouchIdAuth extends AppCompatActivity {
         teacherID=getIntent().getExtras().getString("idp");
         lectureTag=getIntent().getExtras().getString("subTagp");
         studentID=getIntent().getExtras().getString("studentIDp");
+        level=getIntent().getExtras().getInt("level");
 
         mHeadingLabel = (TextView) findViewById(R.id.headingLabel);
         mFingerprintImage = (ImageView) findViewById(R.id.fingerprintImage);
@@ -124,7 +126,7 @@ public class TouchIdAuth extends AppCompatActivity {
         if (true) {
             Toast.makeText(context, "Wait your Attendance is being marked", Toast.LENGTH_SHORT).show();
             final Map<String, Object> user = new HashMap<>();
-            user.put(studentID, true);
+            user.put(studentID+" -"+level.toString(), true);
             db.collection(teacherID).document(lectureTag).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {

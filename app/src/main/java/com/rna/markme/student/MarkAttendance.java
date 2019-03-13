@@ -49,8 +49,10 @@ public class MarkAttendance extends AppCompatActivity implements View.OnClickLis
     String studentID;
     WifiInfo info;
     ArrayList<String> arraylist = new ArrayList<>();
+    ArrayList<Integer> arraylist2 = new ArrayList<>();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     ArrayAdapter adapter;
+    int lev=0;
     boolean b = false;
     boolean connected = false;
     static public final int REQUEST_LOCATION = 1;
@@ -94,13 +96,16 @@ public class MarkAttendance extends AppCompatActivity implements View.OnClickLis
     }
 
     public String check(String bssid) {
+        int c=-1;
         for (String string : arraylist) {
+            c++;
             if (string.equals(bssid)) {
                 b = true;
+                lev=arraylist2.get(c);
                 //mark(findViewById(R.id.MARK));
                 mLoadingIndicator.setVisibility(View.INVISIBLE);
                 textStatus.setVisibility(View.VISIBLE);
-                return "Found in Class \uD83D\uDC4D\uD83C\uDFFB";
+                return "Found in Class \uD83D\uDC4D\uD83C\uDFFB"+lev;
             }
         }
         b=false;
@@ -124,6 +129,7 @@ public class MarkAttendance extends AppCompatActivity implements View.OnClickLis
                 intent.putExtra("studentIDp",studentID);
                 intent.putExtra("idp",id);
                 intent.putExtra("subTagp",subTag);
+                intent.putExtra("level",lev);
                 startActivity(intent);
             }
             else {
@@ -154,6 +160,7 @@ public class MarkAttendance extends AppCompatActivity implements View.OnClickLis
     private void scanWifiNetworks() {
 
         arraylist.clear();
+        arraylist2.clear();
         registerReceiver(wifi_receiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
 
         wifi.startScan();
@@ -174,6 +181,7 @@ public class MarkAttendance extends AppCompatActivity implements View.OnClickLis
 
             for (ScanResult scanResult : results) {
                 arraylist.add(scanResult.BSSID);
+                arraylist2.add(scanResult.level);
                 adapter.notifyDataSetChanged();
             }
 
