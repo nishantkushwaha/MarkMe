@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".student.TouchIdAuth">
+    <TextView
+        android:id="@+id/headingLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:padding="20dp"
+        app:fontFamily="@font/rubik_medium"
+        android:text="Fingerprint Authentication"
+        android:textColor="#ca000000"
+        android:textSize="20sp" />
+
+    <ImageView
+        android:id="@+id/fingerprintImage"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="40dp"
+        android:layout_below="@+id/headingLabel"
+        android:layout_centerHorizontal="true"
+        app:srcCompat="@drawable/iconapp" />
+
+    <TextView
+        android:id="@+id/paraLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/fingerprintImage"
+        android:layout_centerHorizontal="true"
+        android:padding="20dp"
+        app:fontFamily="@font/rubik_medium"
+        android:text="Place your Finger on the Scanner to Proceed"
+        android:textAlignment="center" />
+</RelativeLayout>
